@@ -18,10 +18,25 @@ func (r *Header) Marshal() ([]byte, error) {
 }
 
 type Header struct {
-	Time        *int64  `json:"time,omitempty"`
-	Cmd         *string `json:"cmd,omitempty"`
-	Sig         *string `json:"sig,omitempty"`
-	Accesskeyid *int64  `json:"accesskeyid,omitempty"`
+	Time        int64  `json:"time,omitempty"`
+	Cmd         string `json:"cmd,omitempty"`
+	Sig         string `json:"sig,omitempty"`
+	Accesskeyid int64  `json:"accesskeyid,omitempty"`
 }
 
-//-------------------------
+//  -------------------------
+
+//Request 请求结构
+type Request struct {
+	Name              string
+	Header            *Header
+	RequestMode       RequestMode
+	RequestReturnType RequestReturnType
+}
+
+func NewRequest(name string, requestMode RequestMode, returnType RequestReturnType) *Request {
+	r := &Header{Cmd: name}
+	return &Request{Name: name, Header: r, RequestMode: requestMode, RequestReturnType: returnType}
+}
+
+//  -------------------------
