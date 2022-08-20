@@ -18,3 +18,7 @@ func SHA1(s string) string {
 	}
 	return fmt.Sprintf("%x", t.Sum(nil))
 }
+
+func GetFullURL(app App, request Request) string {
+	return fmt.Sprintf("%s/api/%s", app.APISite, request.Name)
+}

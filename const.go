@@ -22,6 +22,24 @@ const (
 	CodeFailure      ErrCode = 700
 )
 
+func (e ErrCode) ToString() string {
+	switch e {
+	case CodeSuccess:
+		return "成功"
+	case CodeNoUID:
+		return "UID不存在"
+	case CodeLoginInvalid:
+		return "登陆信息失效"
+	case CodeLoginFail:
+		return "登陆验证失败"
+	case CodeSigFail:
+		return "APIsig计算校验失败"
+	case CodeFailure:
+		return "操作失败"
+	}
+	return ""
+}
+
 /* 请求方法
 1 Post
 2 Get
@@ -33,6 +51,17 @@ const (
 	Post RequestMode = 1
 	Get  RequestMode = 2
 )
+
+func (e RequestMode) ToString() string {
+	switch e {
+	case Post:
+		return "POST"
+	case Get:
+		return "GET"
+
+	}
+	return ""
+}
 
 /* 请求方法
 1 JSON
@@ -47,6 +76,18 @@ const (
 	PNG       RequestReturnType = 2
 	FileStram RequestReturnType = 3
 )
+
+func (e RequestReturnType) ToString() string {
+	switch e {
+	case JSON:
+		return ""
+	case PNG:
+		return ""
+	case FileStram:
+		return ""
+	}
+	return ""
+}
 
 /*
 方式	名称	返回内容	解释

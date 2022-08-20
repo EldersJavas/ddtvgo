@@ -4,31 +4,39 @@ package ddtvgo
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
+	"io/ioutil"
 	"net/http"
+	"net/url"
 )
 
 func test() error {
-	router := gin.Default()
-	router.POST("/events", events)
-	err := router.Run(":5000")
+	resp, err := http.Post("", "", nil)
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(string(body))
 	return nil
 }
 
-func events(c *gin.Context) {
-	buf := make([]byte, 1024)
+func PostReq(urls string, params string) (string, error) {
+	data1 := url.Values{"name": {""}, "id": {""}}
+	resopne, err := http.PostForm(urls, data1)
+	if err != nil {
+		panic(err)
+	}
+	defer resopne.Body.Close()
 
-	n, _ := c.Request.Body.Read(buf)
+	// 5. 一次性读取请求到的数据
+	body, err := ioutil.ReadAll(resopne.Body)
+	if err != nil {
+		panic(err)
+	}
 
-	fmt.Println(string(buf[0:n]))
-
-	resp := map[string]string{"hello": "world"}
-	c.JSON(http.StatusOK, resp)
-
-	/*post_gwid := c.PostForm("name")
-	  fmt.Println(post_gwid)*/
-
+	return string(body), nil
 }

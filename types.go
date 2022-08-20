@@ -40,3 +40,9 @@ func NewRequest(name string, requestMode RequestMode, returnType RequestReturnTy
 }
 
 //  -------------------------
+
+type App struct {
+	AccessKeyId     string // = "***************************"
+	AccessKeySecret string //= "****************************"
+	APISite         string //= "http://**************:11419"
+}
