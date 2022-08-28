@@ -14,19 +14,18 @@ func (a *App) RunCmd(request *Request) (interface{}, error) {
 	timenow := time.Now().UTC().Unix()
 	request.Url = a.APISite + request.Name
 	request.Header = &Header{Cmd: request.Name,
-		Sig: SHA1(fmt.Sprintf("accesskeyid=%s;accesskeysecret=%s;cmd=%s;time=%s",
+		Sig: SHA1(fmt.Sprintf("accesskeyid=%s;accesskeysecret=%s;cmd=%s;time=%s;",
 			a.AccessKeyId,
 			a.AccessKeySecret,
 			strings.ToLower(request.Name),
 			strconv.FormatInt(timenow, 10))),
 		Accesskeyid: a.AccessKeyId,
 		Time:        timenow}
-	log.Println(fmt.Sprintf("accesskeyid=%s;accesskeysecret=%s;cmd=%s;time=%s",
+	log.Println(fmt.Sprintf("accesskeyid=%s;accesskeysecret=%s;cmd=%s;time=%s;",
 		a.AccessKeyId,
 		a.AccessKeySecret,
 		strings.ToLower(request.Name),
 		strconv.FormatInt(timenow, 10)))
-
 	switch request.RequestMode {
 	case Post:
 		r, err := PostC(request)
