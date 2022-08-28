@@ -3,6 +3,7 @@
 package ddtvgo
 
 import (
+	"bytes"
 	"crypto/sha1"
 	"fmt"
 	"io"
@@ -21,4 +22,14 @@ func SHA1(s string) string {
 
 func GetFullURL(app App, request Request) string {
 	return fmt.Sprintf("%s/api/%s", app.APISite, request.Name)
+}
+
+func JsonIo2Text(bt io.ReadCloser) ([]byte, error) {
+	buf := new(bytes.Buffer)
+	_, err := buf.ReadFrom(bt)
+	if err != nil {
+		return nil, err
+	}
+	out := buf.Bytes()
+	return out, nil
 }

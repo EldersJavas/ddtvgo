@@ -3,40 +3,43 @@
 package ddtvgo
 
 import (
-	"fmt"
-	"io/ioutil"
+	"bytes"
+	"log"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
-func test() error {
-	resp, err := http.Post("", "", nil)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	fmt.Println(string(body))
-	return nil
+/*
+"form-data":
+{
+   "time":1641149566,
+   "cmd":"Room_Info",
+   "sig":"566a322043b6217334bc15f4e6d18973d033aa4b",
+   "accesskeyid":1
 }
 
-func PostReq(urls string, params string) (string, error) {
-	data1 := url.Values{"name": {""}, "id": {""}}
-	resopne, err := http.PostForm(urls, data1)
-	if err != nil {
-		panic(err)
-	}
-	defer resopne.Body.Close()
 
-	// 5. 一次性读取请求到的数据
-	body, err := ioutil.ReadAll(resopne.Body)
+accesskeyid=1;accesskeysecret=2;cmd=room_info;time=1641149566
+*/
+
+func PostC(request *Request) (*http.Response, error) {
+	client := http.Client{}
+	formValues := url.Values{}
+
+	formValues.Set("time", strconv.FormatInt(request.Header.Time, 10))
+	formValues.Set("cmd", request.Header.Cmd)
+	formValues.Set("sig", request.Header.Sig)
+	formValues.Set("accesskeyid", request.Header.Accesskeyid)
+
+	formDataStr := formValues.Encode()
+	log.Println(formDataStr)
+	formDataBytes := []byte(formDataStr)
+	formBytesReader := bytes.NewReader(formDataBytes)
+	resqq, err := client.Post(request.Url, "application/x-www-form-urlencoded", formBytesReader)
 	if err != nil {
-		panic(err)
+		return resqq, err
 	}
 
-	return string(body), nil
+	return resqq, nil
 }

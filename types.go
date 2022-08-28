@@ -21,7 +21,7 @@ type Header struct {
 	Time        int64  `json:"time,omitempty"`
 	Cmd         string `json:"cmd,omitempty"`
 	Sig         string `json:"sig,omitempty"`
-	Accesskeyid int64  `json:"accesskeyid,omitempty"`
+	Accesskeyid string `json:"accesskeyid,omitempty"`
 }
 
 //  -------------------------
@@ -32,6 +32,7 @@ type Request struct {
 	Header            *Header
 	RequestMode       RequestMode
 	RequestReturnType RequestReturnType
+	Url               string
 }
 
 func NewRequest(name string, requestMode RequestMode, returnType RequestReturnType) *Request {
