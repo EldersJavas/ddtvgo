@@ -40,6 +40,7 @@ func PostC(request *Request) (*http.Response, error) {
 	if err != nil {
 		return resqq, err
 	}
-
+	as, _ := JsonIo2Text(resqq.Body)
+	log.Println(string(as), resqq.Status)
 	return resqq, nil
 }

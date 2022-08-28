@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"strings"
 )
 
 // SHA1 Get SHA1
@@ -17,7 +18,7 @@ func SHA1(s string) string {
 	if err != nil {
 		log.Fatalln("SHA1 Error")
 	}
-	return fmt.Sprintf("%x", t.Sum(nil))
+	return strings.ToUpper(fmt.Sprintf("%x", t.Sum(nil)))
 }
 
 func GetFullURL(app App, request Request) string {
