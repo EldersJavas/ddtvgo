@@ -12,7 +12,7 @@ ddtvgo - Go API/SDK for [DDTV](https://github.com/CHKZL/DDTV)
 
 # Feature
 
-- [ ] API调用方式
+- [x] API调用方式
 - [ ] Web接口方式
 - [ ] Util函数
 - [ ] [UI界面]()(在另一个库)
@@ -21,8 +21,13 @@ ddtvgo - Go API/SDK for [DDTV](https://github.com/CHKZL/DDTV)
 
 ## 1. API调用
 ```go
-a := App{"AccessKeyId","AccessKeySecret","APISite"}
 
+appg := &ddtvgo.App{AccessKeyId: AccessKeyId, AccessKeySecret: AccessKeySecret, APISite: APISite}
+r, err := appg.RunCmd(ddtvgo.System_Info)
+fmt.Println(string(r.([]byte)))
+if err != nil {
+    fmt.Println(err)
+}
 
 //开发中
 ```
@@ -33,7 +38,5 @@ a := App{"AccessKeyId","AccessKeySecret","APISite"}
 ## 3. Util函数 懒人专用
 
 ```go
-a := App{"AccessKeyId","AccessKeySecret","APISite"}
-Resq, err := GetSystemInfo(a)
 //开发中
 ```
